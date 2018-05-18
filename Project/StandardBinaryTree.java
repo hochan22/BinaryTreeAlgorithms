@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class StandardBinaryTree
 {
     private TreeNode root;
+    private int treeNodeNumber = 0;
 
     /**
      * constructor of the Standard Binary Tree with a root tree node
@@ -16,6 +17,34 @@ public class StandardBinaryTree
         this.root = treeNode;
     }
 
-    public void createTree()
+    /**
+     * create a tree without elements
+     */
+    public TreeNode create()
+    {
+        treeNodeNumber++;
+        return root;
+    }
+
+    public TreeNode search(int key)
+    {
+        TreeNode treeNode = root;
+        while(treeNode != null)
+        {
+            if(k < treeNode.getValue())
+            {
+                treeNode = treeNode.getLeftNode();
+            }
+            else if(k > treeNode.getValue())
+            {
+                treeNode = treeNode.getRightNode();
+            }
+            else
+            {
+                return treeNode;
+            }
+        }
+        System.out.print("There is no such tree node with key " + key);
+    }
 
 }
