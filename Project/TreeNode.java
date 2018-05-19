@@ -33,7 +33,7 @@ public class TreeNode
     /**
      * set the value of this TreeNode after the construction
      */
-    public void setValue()
+    public void setValue(int value)
     {
         this.value = value;
     }
