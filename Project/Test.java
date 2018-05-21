@@ -14,10 +14,12 @@ public class Test
         TreeNode node3 = SBT.search(5);
         boolean result2 = SBT.insert(25);
         TreeNode node4 = SBT.search(25);
-        System.out.println(node4.getValue());
         boolean result3 = SBT.insert(1);
         TreeNode node5= SBT.search(1);
-        System.out.print(node5.getValue());
+        boolean result4 = SBT.insert(7);
+        TreeNode node7= SBT.search(7);
+        SBT.delete(5);
+        TreeNode node6 = SBT.search(5);
         //System.out.print(node.getValue());
     }
 }

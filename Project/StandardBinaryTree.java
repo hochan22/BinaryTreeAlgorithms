@@ -102,5 +102,101 @@ public class StandardBinaryTree
         return result;
     }
 
+    public TreeNode findMin(TreeNode node)
+    {
+        if(node == null)
+        {
+            return null;
+        }
+        else if(node.getLeftNode().getLeftNode() == null)
+        {
+            return node;
+        }
+        return findMin(node.getLeftNode());
+    }
 
+    public TreeNode findMax(TreeNode node) {
+        if(node == null)
+        {
+            return null;
+        }
+        else if(node.getRightNode().getRightNode() == null)
+        {
+            return node;
+        }
+        return findMax(node.getRightNode());
+    }
+
+    public void delete(int key)
+    {
+        deleteNode(key, root);
+    }
+
+    public TreeNode deleteNode(int key, TreeNode beginNode)
+    {
+        TreeNode treeNode = beginNode;
+        TreeNode nodeParent = beginNode;
+        while(treeNode != null)
+        {
+            if(key < treeNode.getValue())
+            {
+                nodeParent = treeNode;
+                treeNode = treeNode.getLeftNode();
+            }
+            else if(key > treeNode.getValue())
+            {
+                nodeParent = treeNode;
+                treeNode = treeNode.getRightNode();
+            }
+            else
+            {
+                break;
+            }
+        }
+        if(treeNode == null)
+        {
+            System.out.println("key does not exist");
+            return null;
+        }
+
+        //leaf node
+        if(treeNode.getLeftNode() == null && treeNode.getRightNode() == null)
+        {
+            if(key > nodeParent.getValue())
+            {
+                nodeParent.deleteRightNode();
+            }
+            else
+            {
+                nodeParent.deleteLeftNode();
+            }
+        }
+
+        if(treeNode.getLeftNode() != null & treeNode.getRightNode() != null)
+        {
+            TreeNode replaceNode = findMin(treeNode.getRightNode()).getLeftNode();
+            TreeNode replaceNodeParent = findMin(treeNode.getRightNode());
+            replaceNode.setLeftNode(treeNode.getLeftNode());
+            replaceNode.setRightNode(treeNode.getRightNode());
+            if(replaceNode.getValue() > nodeParent.getValue())
+            {
+                nodeParent.setRightNode(replaceNode);
+            }
+            else
+            {
+                nodeParent.setLeftNode(replaceNode);
+            }
+            TreeNode node1 = deleteNode(replaceNode.getValue(), replaceNodeParent);
+        }
+        if(treeNode.getLeftNode() != null & treeNode.getRightNode() == null)
+        {
+            nodeParent.setLeftNode(treeNode.getLeftNode());
+        }
+        if(treeNode.getRightNode() != null & treeNode.getLeftNode() == null)
+        {
+            nodeParent.setRightNode(treeNode.getRightNode());
+        }
+
+        return treeNode;
+    }
 }

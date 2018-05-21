@@ -74,5 +74,14 @@ public class TreeNode
         rightNode = treeNode;
     }
 
+    public void deleteRightNode()
+    {
+        rightNode = null;
+    }
+    public void deleteLeftNode()
+    {
+        leftNode = null;
+    }
+
 
 }
