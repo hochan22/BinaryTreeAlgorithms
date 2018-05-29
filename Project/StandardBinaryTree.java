@@ -32,32 +32,23 @@ public class StandardBinaryTree
      * @param key the value to be searched
      * @return if find the key, return the node object with that value, if not find, return the parent node of that value
      */
-    public TreeNode search(int key)
+    private boolean searchRecursive(TreeNode currentNode, int key)
     {
-        TreeNode treeNode = root;
-        TreeNode nodeParent = root;
-        while(treeNode != null)
+        if(currentNode == null)
         {
-            if(key < treeNode.getValue())
-            {
-                nodeParent = treeNode;
-                treeNode = treeNode.getLeftNode();
-            }
-            else if(key > treeNode.getValue())
-            {
-                nodeParent = treeNode;
-                treeNode = treeNode.getRightNode();
-            }
-            else
-            {
-                System.out.println("Find the search key " + key);
-                return treeNode;
-            }
+            return false;
         }
-        System.out.println("There is no such tree node with key " + key);
-        return nodeParent;
+        if(key == currentNode.getValue())
+        {
+            return true;
+        }
+        return key < currentNode.getValue()? searchRecursive(currentNode.getLeftNode(),key) : searchRecursive(currentNode.getRightNode(),key);
     }
 
+    public boolean search(int key)
+    {
+        return searchRecursive(root, key);
+    }
     /**
      * insert a new key object into the standard binary tree
      * @param key the insert key value
@@ -102,15 +93,11 @@ public class StandardBinaryTree
         return result;
     }
 
-    public TreeNode findMin(TreeNode node)
+    public int findMin(TreeNode node)
     {
-        if(node == null)
+        if(node.getLeftNode() == null)
         {
-            return null;
-        }
-        else if(node.getLeftNode().getLeftNode() == null)
-        {
-            return node;
+            return node.getValue();
         }
         return findMin(node.getLeftNode());
     }
@@ -127,76 +114,42 @@ public class StandardBinaryTree
         return findMax(node.getRightNode());
     }
 
-    public void delete(int key)
+    private TreeNode deleteRecursive(TreeNode currentNode, int key)
     {
-        deleteNode(key, root);
-    }
-
-    public TreeNode deleteNode(int key, TreeNode beginNode)
-    {
-        TreeNode treeNode = beginNode;
-        TreeNode nodeParent = beginNode;
-        while(treeNode != null)
+        if(currentNode == null)
         {
-            if(key < treeNode.getValue())
-            {
-                nodeParent = treeNode;
-                treeNode = treeNode.getLeftNode();
-            }
-            else if(key > treeNode.getValue())
-            {
-                nodeParent = treeNode;
-                treeNode = treeNode.getRightNode();
-            }
-            else
-            {
-                break;
-            }
-        }
-        if(treeNode == null)
-        {
-            System.out.println("key does not exist");
             return null;
         }
+        if(key == currentNode.getValue())
+        {
+            if(currentNode.getLeftNode() == null && currentNode.getRightNode() == null)
+            {
+                return null;
+            }
+            if(currentNode.getRightNode() == null)
+            {
+                return currentNode.getLeftNode();
+            }
+            if(currentNode.getLeftNode() == null)
+            {
+                return currentNode.getRightNode();
+            }
+            int minKey = findMin(currentNode.getRightNode());
+            currentNode.setValue(minKey);
+            currentNode.setRightNode(deleteRecursive(currentNode.getRightNode(), minKey));
+            return currentNode;
+        }
+        if(key < currentNode.getValue())
+        {
+            currentNode.setLeftNode(deleteRecursive(currentNode.getLeftNode(), key));
+            return currentNode;
+        }
+        currentNode.setRightNode(deleteRecursive(currentNode.getRightNode(), key));
+        return currentNode;
+    }
 
-        //leaf node
-        if(treeNode.getLeftNode() == null && treeNode.getRightNode() == null)
-        {
-            if(key > nodeParent.getValue())
-            {
-                nodeParent.deleteRightNode();
-            }
-            else
-            {
-                nodeParent.deleteLeftNode();
-            }
-        }
-
-        if(treeNode.getLeftNode() != null & treeNode.getRightNode() != null)
-        {
-            TreeNode replaceNode = findMin(treeNode.getRightNode()).getLeftNode();
-            TreeNode replaceNodeParent = findMin(treeNode.getRightNode());
-            replaceNode.setLeftNode(treeNode.getLeftNode());
-            replaceNode.setRightNode(treeNode.getRightNode());
-            if(replaceNode.getValue() > nodeParent.getValue())
-            {
-                nodeParent.setRightNode(replaceNode);
-            }
-            else
-            {
-                nodeParent.setLeftNode(replaceNode);
-            }
-            TreeNode node1 = deleteNode(replaceNode.getValue(), replaceNodeParent);
-        }
-        if(treeNode.getLeftNode() != null & treeNode.getRightNode() == null)
-        {
-            nodeParent.setLeftNode(treeNode.getLeftNode());
-        }
-        if(treeNode.getRightNode() != null & treeNode.getLeftNode() == null)
-        {
-            nodeParent.setRightNode(treeNode.getRightNode());
-        }
-
-        return treeNode;
+    public void delete(int key)
+    {
+        deleteRecursive(root, key);
     }
 }

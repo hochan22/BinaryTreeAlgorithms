@@ -8,18 +8,17 @@ public class Test
     {
         int value = 10;
         StandardBinaryTree SBT = new StandardBinaryTree(value);
-        TreeNode node1 = SBT.search(5);
-        TreeNode node2 = SBT.search(10);
-        boolean result = SBT.insert(5);
-        TreeNode node3 = SBT.search(5);
-        boolean result2 = SBT.insert(25);
-        TreeNode node4 = SBT.search(25);
-        boolean result3 = SBT.insert(1);
-        TreeNode node5= SBT.search(1);
-        boolean result4 = SBT.insert(7);
-        TreeNode node7= SBT.search(7);
+        SBT.insert(5);
+        boolean result1 = SBT.search(5);
+        System.out.println(result1);
+        SBT.insert(20);
+        boolean result2 = SBT.search(20);
+        System.out.println(result2);
+        boolean result3 = SBT.search(30);
+        System.out.println(result3);
         SBT.delete(5);
-        TreeNode node6 = SBT.search(5);
+        result1 = SBT.search(5);
+        System.out.println(result1);
         //System.out.print(node.getValue());
     }
 }
