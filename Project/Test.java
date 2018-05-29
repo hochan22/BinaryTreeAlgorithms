@@ -19,6 +19,20 @@ public class Test
         SBT.delete(5);
         result1 = SBT.search(5);
         System.out.println(result1);
+        SBT.insert(4);
+        SBT.insert(7);
+        SBT.insert(15);
+        SBT.insert(14);
+        SBT.insert(9);
+        SBT.insert(21);
+        SBT.insert(18);
+        SBT.insert(1);
+        SBT.insert(2);
+        boolean result4 = SBT.search(18);
+        System.out.println(result4);
+        SBT.delete(14);
+        boolean result5 = SBT.search(14);
+        System.out.println(result5);
         //System.out.print(node.getValue());
     }
 }
