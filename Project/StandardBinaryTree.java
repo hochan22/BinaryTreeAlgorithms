@@ -54,7 +54,27 @@ public class StandardBinaryTree
      * @param key the insert key value
      * @return if insert successfully, return true
      */
-    public boolean insert(int key)
+    private TreeNode insertRecursive(TreeNode current, int key) {
+        if (current == null) {
+            return new TreeNode(key);
+        }
+
+        if (key < current.getValue()) {
+            current.setLeftNode(insertRecursive(current.getLeftNode(), key));
+        } else if (key > current.getValue()) {
+            current.setRightNode(insertRecursive(current.getRightNode(), key));
+        } else {
+            // value already exists
+            return current;
+        }
+
+        return current;
+    }
+
+    public void insert(int key) {
+        root = insertRecursive(root, key);
+    }
+    /*public boolean insert(int key)
     {
         boolean result = false;
         TreeNode treeNode = root;
@@ -92,7 +112,7 @@ public class StandardBinaryTree
         }
         return result;
     }
-
+*/
     public int findMin(TreeNode node)
     {
         if(node.getLeftNode() == null)

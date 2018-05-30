@@ -49,7 +49,7 @@ public class TreeNode
 
     /**
      * set the left child node with the input tree node
-     * @param treeNode the input left child node
+     * @param TreeNode the input left child node
      */
     public void setLeftNode(TreeNode treeNode)
     {
