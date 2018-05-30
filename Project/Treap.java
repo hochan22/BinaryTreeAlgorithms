@@ -92,7 +92,7 @@ public class Treap
 
     private static class Node {
         public Node right, left;
-        public final int priority = rand.nextInt();
+        public final int priority = rand.nextInt(500000);
         public int data;
 
         public Node(int data) {
