@@ -82,14 +82,14 @@ public class Treap
         while (node.left != null) node = node.left;
         return node.data;
     }
-
+/*
     @Override
     public String toString() {
         return "Treap{" +
                 "root=" + root +
                 '}';
     }
-
+*/
     private static class Node {
         public Node right, left;
         public final int priority = rand.nextInt(500000);
